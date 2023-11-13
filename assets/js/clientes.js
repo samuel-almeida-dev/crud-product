@@ -11,19 +11,19 @@ const errorMessage = document.getElementById("errorMessage");
 
 const products = [
   {
-    nome: "IPhone X 64Gb Grey",
-    preco: 999.0,
-    quantidade: 3,
+    nome: "Indivíduo 01 Teste",
+    preco: 30,
+    quantidade: 32120210122,
   },
   {
-    nome: "Samsung S8 Black",
-    preco: 756.0,
-    quantidade: 10,
+    nome: "Indivíduo 02 Teste",
+    preco: 23,
+    quantidade: 10120320212,
   },
   {
-    nome: "Acer Aspire 5",
-    preco: 3490.0,
-    quantidade: 3,
+    nome: "Indivíduo 03 Teste",
+    preco: 17,
+    quantidade: 55555555555,
   },
 ];
 
@@ -31,83 +31,36 @@ const products = [
 function formatDataToString(value) {
   // O método 'toLocaleString' é usado para formatar um valor numérico.
   // Ele aceita dois argumentos: o primeiro é a localização ('pt-BR' para Português do Brasil) e o segundo é um objeto de opções.
-  const valorFormatado = value.toLocaleString("pt-BR", {
-    style: "currency", // Define o estilo de formatação como moeda.
-    currency: "BRL", // Define a moeda como BRL (Real Brasileiro).
-  });
+  const valorFormatado = value.toLocaleString({});
 
   // A função retorna o valor formatado como uma string no formato de moeda brasileira.
   return valorFormatado;
 }
 
 function handleDelete(id) {
-  // Filtra o array 'products', removendo o produto com o ID fornecido.
-  products.splice(id, 1);
-
-  // Renderiza novamente a tabela após a remoção do produto.
-  renderDataTable();
+  alert(id);
 }
-
-let editIndex = -1; // Variável global para rastrear o índice em edição.
 
 function handleEdit(id) {
-  // Define o índice em edição.
-  editIndex = id;
-
-  // Encontra o produto no array 'products' com base no ID.
-  const produtoEditavel = products[id];
-
-  if (produtoEditavel) {
-    // Preenche os campos de entrada do formulário modal com os valores do produto existente.
-    productName.value = produtoEditavel.nome;
-    productValue.value = produtoEditavel.preco;
-    productQuantity.value = produtoEditavel.quantidade;
-
-    // Abre o modal para edição.
-    openModal();
-  }
-}
-
-function saveProductEdit() {
-  if (editIndex !== -1) {
-    // Atualiza o produto existente com os novos valores.
-    products[editIndex].nome = productName.value;
-    products[editIndex].preco = parseFloat(productValue.value);
-    products[editIndex].quantidade = parseInt(productQuantity.value);
-
-    // Limpa os campos de entrada após editar o produto.
-    productName.value = "";
-    productValue.value = "";
-    productQuantity.value = "";
-
-    // Fecha o modal após editar o produto.
-    closeModal();
-
-    // Renderiza novamente a tabela após editar o produto.
-    renderDataTable();
-
-    // Reseta a variável global.
-    editIndex = -1;
-  }
+  alert(id);
 }
 
 // Esta é uma função chamada 'createTableBodyRow' que cria uma linha de tabela HTML com dados passados como argumentos.
-function createTableBodyRow(nome, preco, quantidade, total, id) {
+function createTableBodyRow(nome, preco, quantidade, id) {
   // A variável 'html' é inicializada com uma string que representa uma linha de tabela HTML.
-  // Os valores passados como argumentos (nome, preço, quantidade e total) são inseridos nessa string.
+  // Os valores passados como argumentos (nome, preço, quantidade) são inseridos nessa string.
   const html = (tableData.innerHTML += `
         <tr class="even:bg-[#f2f2f2] odd:bg-white">
             <td class="p-3">${nome}</td>
             <td class="p-3">${preco}</td>
             <td class="p-3">${quantidade}</td>
-            <td class="text-center p-3">${total}</td>
             <td class="flex gap-2 items-center justify-center p-3"> 
-            <button onclick="handleEdit(${id})" class="py-1 px2 bg-sky-700 text-white rounded-md p-2">
-            Editar
-          </button>                    
-              <button onclick="handleDelete(${id})" class="py-1 px2 bg-red-800 text-white rounded-md p-2">
-              Deletar
-            </button>
+              <button onclick="handdleEdit(${id})" class="py-1 px2 bg-sky-700 text-white rounded-md p-2">
+                Editar
+              </button>
+              <button onclick="handdleDelete(${id})" class="py-1 px2 bg-red-800 text-white rounded-md p-2">
+                Deletar
+              </button>
             </td>
         </tr>
     `);
@@ -150,33 +103,30 @@ function addProduct() {
   // Obtém os valores dos campos de entrada do HTML
   const nome = productName.value;
   const preco = parseFloat(productValue.value); // Converte o valor para número.
-  const quantidade = parseInt(productQuantity.value); // Converte o valor para número inteiro.
- 
+  const quantidade = (parseInt(productQuantity.value)); // Converte o valor para número inteiro.
+
   // Verifica se os campos não estão vazios e se os valores numéricos são válidos.
   if (nome && !isNaN(preco) && !isNaN(quantidade)) {
-     // Cria um novo objeto representando o produto.
-     const novoProduto = {
-       nome: nome,
-       preco: preco,
-       quantidade: quantidade,
-     };
- 
-     // Adiciona o novo produto ao array 'products'.
-     products.push(novoProduto);
- 
-     // Limpa os campos de entrada após adicionar o produto.
-     productName.value = "";
-     productValue.value = "";
-     productQuantity.value = "";
-     hideErrorMessage();
- 
-     // Close the modal after successfully adding a product.
-     closeModal();
+    // Cria um novo objeto representando o produto.
+    const novoProduto = {
+      nome: nome,
+      preco: preco,
+      quantidade: quantidade,
+    };
+
+    // Adiciona o novo produto ao array 'products'.
+    products.push(novoProduto);
+
+    // Limpa os campos de entrada após adicionar o produto.
+    productName.value = "";
+    productValue.value = "";
+    productQuantity.value = "";
+    hideErrorMessage();
   } else {
-     // Exibe uma mensagem de erro na tela do usuário se os campos estiverem vazios ou os valores não forem válidos.
-     showErrorMessage();
+    // Exibe uma mensagem de erro na tela do usuário se os campos estiverem vazios ou os valores não forem válidos.
+    showErrorMessage();
   }
- }
+}
 
 // Esta é uma função chamada 'renderDataTable' que tem a finalidade de renderizar os dados dos produtos em uma tabela HTML.
 function renderDataTable() {
@@ -199,12 +149,10 @@ function renderDataTable() {
       product.nome, // Nome do produto.
       preco, // Preço formatado.
       product.quantidade, // Quantidade do produto.
-      totalFormatado, // Total formatado.
-      index // Passa o índice como ID da linha.
+      totalFormatado // Total formatado.
     );
   });
 }
-
 
 renderDataTable();
 
@@ -225,3 +173,5 @@ btnCancel.addEventListener("click", (e) => {
   // Chama a função closeModal() para realizar a ação desejada ao clicar no botão "Cancelar".
   closeModal();
 });
+
+  
